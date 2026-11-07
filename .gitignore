@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+
+# 영상 폴더의 결과물과 음성은 올리지 않는다 (용량이 크다)
+videos/**/renders/
+videos/**/.hyperframes/
+videos/**/*.mp4
+videos/**/*.mov
+videos/**/*.mp3
+videos/**/*.wav
