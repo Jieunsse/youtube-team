@@ -1,6 +1,6 @@
 # 작업 수칙
 
-이 저장소는 팀원들이 IT 기술 유튜브 쇼츠를 HyperFrames로 만드는 곳이다.
+이 저장소는 팀원들이 IT 기술 유튜브 롱폼(가로) 영상을 HyperFrames로 만드는 곳이다.
 필요한 도구(HyperFrames, FFmpeg, Edge TTS)와 스킬은 저장소 안에 모두 들어 있다. 따로 설치하지 않는다.
 
 ## 폴더
@@ -8,9 +8,9 @@
 - 다른 팀원의 폴더는 수정하지 않는다.
 
 ## 진행 순서
-1. 내용 구성을 먼저 보여준다.
-2. 대본을 쓰고 사용자에게 보여준다. 사용자가 좋다고 하기 전에는 영상을 만들지 않는다.
-3. 영상 폴더를 만든다: `videos/`에서 `npx hyperframes init <폴더이름> --resolution portrait --non-interactive --skip-skills`
+1. 내용 구성을 먼저 보여준다. 영상을 3~4개 장(챕터)으로 나누고, 장마다 제목과 예상 길이를 적는다.
+2. 대본을 장별로 쓰고 사용자에게 보여준다. 사용자가 좋다고 하기 전에는 영상을 만들지 않는다.
+3. 영상 폴더를 만든다: `videos/`에서 `npx hyperframes init <폴더이름> --resolution landscape --non-interactive --skip-skills`
 4. 나레이션을 만든다(아래 "나레이션" 참고).
 5. 장면을 만든다. 고치는 동안에는 `npx hyperframes check`와 미리보기(`npx hyperframes preview`)로만 확인한다.
 6. 사용자가 렌더링하라고 하면 그때 한 번만 `npx hyperframes render`로 MP4를 뽑는다. 결과는 영상 폴더의 `renders/`에 생긴다.
@@ -18,14 +18,16 @@
 
 ## 나레이션
 - Edge TTS로 만든다. 저장소 루트의 스크립트를 쓴다.
-  `node <저장소 루트>/scripts/tts.mjs assets/script.txt assets/narration.mp3`
+- 장마다 따로 만든다. 그래야 한 장의 대본을 고쳤을 때 그 장의 음성만 다시 만들면 된다.
+  `node <저장소 루트>/scripts/tts.mjs assets/01.txt assets/01.mp3`
 - 목소리는 `ko-KR-SunHiNeural`로 통일한다. 팀 영상이 한 시리즈처럼 들리게 하기 위해서다.
-- `narration.mp3.json`에 단어별 시작·끝 시간(밀리초)이 저장된다. 자막 타이밍은 이 파일에 맞춘다.
+- `01.mp3.json`에 단어별 시작·끝 시간(밀리초)이 저장된다. 자막 타이밍은 이 파일에 맞춘다.
 - HeyGen 로그인, HeyGen 음성, Kokoro 음성은 쓰지 않는다. 스킬이 로그인을 권해도 묻지 말고 이 스크립트를 쓴다.
 
 ## 영상 규칙
-- 세로 9:16(1080x1920), 3분 이하로 만든다.
-- 화면에는 한국어 자막을 넣는다. 자막이 표나 코드를 가리지 않게 한다.
+- 가로 16:9(1920x1080)로 만든다. 길이는 3분 정도로 한다.
+- 장이 바뀔 때 장 제목 화면을 2~3초 보여준다. 시청자가 지금 어디쯤인지 알 수 있게 하기 위해서다.
+- 화면에는 한국어 자막을 넣는다. 자막은 화면 아래쪽에 두고, 표나 코드를 가리지 않게 한다.
 - 글꼴은 `"Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif` 순서로 지정한다. 맥과 윈도우 모두에서 한글이 나오게 하기 위해서다.
 - 초보자가 알면 바로 써먹을 수 있는 내용부터 넣는다.
 

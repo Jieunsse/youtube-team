@@ -22,5 +22,15 @@ const tts = new EdgeTTS({
   rate: process.env.TTS_RATE || 'default',
   timeout: 60000,
 });
-await tts.ttsPromise(text, output);
+// Edge TTS 서버가 가끔 요청을 거절한다(429). 잠깐 쉬었다가 최대 3번까지 다시 시도한다.
+for (let attempt = 1; ; attempt++) {
+  try {
+    await tts.ttsPromise(text, output);
+    break;
+  } catch (err) {
+    if (attempt >= 3) throw err;
+    console.error(`TTS 실패(${attempt}번째), ${attempt * 3}초 뒤 다시 시도: ${err.message}`);
+    await new Promise((r) => setTimeout(r, attempt * 3000));
+  }
+}
 console.log(`저장: ${output}`);
